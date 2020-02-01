@@ -1,7 +1,6 @@
 import pygame
-
-
-#initialize the pygame
+import random
+# initialize the pygame
 
 pygame.init()
 
@@ -18,9 +17,19 @@ playerX = 370
 playerY = 480
 playerX_change = 0
 
-# put the img at the initial position
+# Enemy
+enemyImg = pygame.image.load('enemy.png')
+enemyX = random.randint(0, 800)
+enemyY = random.randint(50, 150)
+enemyX_change = 0
+
+
 def player(x, y):
     screen.blit(playerImg, (x, y))
+
+
+def enemy(x, y):
+    screen.blit(enemyImg, (x, y))
 
 
 # Game Loop
@@ -29,12 +38,11 @@ while running:
 
     screen.fill((0, 0, 0))
 
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # if keystroke is pressed check whether its right or left
+        # if keystroke is pressed check whether its right or left
         if event.type == pygame.KEYDOWN:
             print("A keystroke is pressed")
 
@@ -49,10 +57,11 @@ while running:
                 playerX_change = 0
 
     if playerX <= 0:
-            playerX = 0
+        playerX = 0
     elif playerX >= 736:
         playerX = 736
 
     playerX += playerX_change
     player(playerX, playerY)
+    enemy(enemyX, enemyY)
     pygame.display.update()
