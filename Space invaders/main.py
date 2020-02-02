@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 from pygame import mixer
+
 # initialize the pygame
 
 pygame.init()
@@ -16,7 +17,6 @@ background = pygame.image.load("background.png")
 mixer.music.load('background.wav')
 mixer.music.play(-1)
 mixer.music.set_volume(0.008)
-
 
 # Caption and Icon
 pygame.display.set_caption("Space_Invaders")
@@ -63,10 +63,18 @@ font = pygame.font.Font('spaceranger.ttf', 32)
 text_x = 10
 text_y = 10
 
+# Game Over text
+over_font = pygame.font.Font('spaceranger.ttf', 64)
+
 
 def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
+
+
+def game_over_text():
+    over_text = over_font.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(over_text, (200, 250))
 
 
 def player(x, y):
@@ -137,6 +145,14 @@ while running:
 
     # Enemy movement
     for i in range(num_of_enemies):
+
+        # Game Over
+        if enemyY[i] > 440:
+            for j in range(num_of_enemies):
+                enemyY[j] = 2000
+            game_over_text()
+            break
+
         enemyX[i] += enemyX_change[i]
 
         if enemyX[i] <= 0:
@@ -145,6 +161,7 @@ while running:
         elif enemyX[i] >= 736:
             enemyX_change[i] = -4
             enemyY[i] += enemyY_change[i]
+
         # Collision
         collision = is_collision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
