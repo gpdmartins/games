@@ -16,7 +16,7 @@ background = pygame.image.load("background.png")
 # Background sound
 mixer.music.load('background.wav')
 mixer.music.play(-1)
-mixer.music.set_volume(0.008)
+mixer.music.set_volume(0.108)
 
 # Caption and Icon
 pygame.display.set_caption("Space_Invaders")
@@ -35,10 +35,12 @@ enemyX = []
 enemyY = []
 enemyX_change = []
 enemyY_change = []
-num_of_enemies = 6
+num_of_enemies = 3
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('enemy.png'))
+    # Choosing more than 1 enemy (depends on how many images do you have)
+    enemy_name = "enemy"+str(i+1) + ".png"
+    enemyImg.append(pygame.image.load(enemy_name))
     enemyX.append(random.randint(0, 735))
     enemyY.append(random.randint(50, 150))
     enemyX_change.append(4)
@@ -128,7 +130,7 @@ while running:
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
                     bullet_sound = mixer.Sound("laser.wav")
-                    mixer.Sound.set_volume(bullet_sound, 0.01)
+                    mixer.Sound.set_volume(bullet_sound, 0.11)
                     bullet_sound.play()
 
         if event.type == pygame.KEYUP:
@@ -166,7 +168,7 @@ while running:
         collision = is_collision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
             explosion_sound = mixer.Sound("explosion.wav")
-            mixer.Sound.set_volume(explosion_sound, 0.01)
+            mixer.Sound.set_volume(explosion_sound, 0.11)
 
             explosion_sound.play()
             bulletY = 480
